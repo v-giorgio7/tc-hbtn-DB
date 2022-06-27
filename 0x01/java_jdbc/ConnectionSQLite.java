@@ -4,28 +4,20 @@ import java.sql.SQLException;
 
 public class ConnectionSQLite {
 
-    static Connection connection;
+    private static Connection connection;
 
     public static void main(String[] args) {
         connection = initConnection("org.sqlite.JDBC",
                 "jdbc:sqlite:sqlite_database_2022.db");
 
-        try {
-            connection.close();
-            System.out.println("Connection to database has been closed");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        closeConnection(connection);
     }
 
-    private static Connection initConnection(String classPackage, String url) {
+    private static Connection initConnection(String classPackage, String urlConnection) {
         try {
             if (connection == null) {
                 Class.forName(classPackage);
-
-                String urlConnection = url;
-                String databaseName = url.split(":")[1];
+                String databaseName = urlConnection.split(":")[1];
 
                 connection = DriverManager.getConnection(urlConnection);
                 System.out.println("Connection to " + databaseName + " database has been established");
@@ -35,5 +27,14 @@ public class ConnectionSQLite {
         }
 
         return connection;
+    }
+
+    private static void closeConnection(Connection connection) {
+        try {
+            connection.close();
+            System.out.println("Connection to database has been closed");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
