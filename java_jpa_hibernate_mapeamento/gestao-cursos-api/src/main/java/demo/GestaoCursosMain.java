@@ -14,10 +14,10 @@ public class GestaoCursosMain {
     public static void main(String[] args) throws ParseException {
         testarAlunoModel();
         System.out.println("\n------------\n");
-        //testarCursoModel();
+        testarCursoModel();
     }
 
-    private static List<Aluno> testarAlunoModel() throws ParseException {
+    private static void testarAlunoModel() throws ParseException {
         AlunoModel alunoModel = new AlunoModel();
 
         Endereco enderecoUm = new Endereco();
@@ -72,7 +72,11 @@ public class GestaoCursosMain {
 
         //3) Buscando um aluno por id
         System.out.println(alunoModel.findById(alunoUm.getId()));
-        System.out.println(alunoModel.findById(alunoDois.getId()));
+
+        // achar os enderecos
+        System.out.println(alunoModel.findById(alunoDois.getId()).getEnderecos());
+        // achar os telefones
+        System.out.println(alunoModel.findById(alunoDois.getId()).getTelefones());
 
         System.out.println("----------------------");
 
@@ -85,8 +89,6 @@ public class GestaoCursosMain {
         //5) Deletar um aluno
         alunoModel.delete(alunoUm);
         System.out.println(alunoModel.findAll());
-
-        return alunosEncontrados;
     }
 
     private static void testarCursoModel() throws ParseException {
@@ -107,6 +109,7 @@ public class GestaoCursosMain {
         professorDois.setEmail("vinicius@techcamps.com");
 
         Endereco enderecoUm = new Endereco();
+        Endereco enderecoDois = new Endereco();
         enderecoUm.setLogradouro("Avenida");
         enderecoUm.setEndereco("Avenida Niemeyer");
         enderecoUm.setNumero("30");
@@ -114,18 +117,35 @@ public class GestaoCursosMain {
         enderecoUm.setCidade("Sao Paulo");
         enderecoUm.setEstado("SP");
         enderecoUm.setCep(11222300);
+        enderecoDois.setLogradouro("Rua");
+        enderecoDois.setEndereco("Rua Marechal");
+        enderecoDois.setNumero("302");
+        enderecoDois.setBairro("Antero");
+        enderecoDois.setCidade("Rio de Janeiro");
+        enderecoDois.setEstado("RJ");
+        enderecoDois.setCep(22333400);
 
         Telefone telefoneUm = new Telefone();
+        Telefone telefoneDois = new Telefone();
         telefoneUm.setDdd("19");
         telefoneUm.setNumero("999998888");
+        telefoneDois.setDdd("21");
+        telefoneDois.setNumero("977775555");
 
         Aluno alunoUm = new Aluno();
+        Aluno alunoDois = new Aluno();
         alunoUm.setNomeCompleto("Andre Silveira");
         alunoUm.setMatricula("1122334455");
         alunoUm.setNascimento(new SimpleDateFormat("dd/MM/yyyy").parse("10/10/1990"));
         alunoUm.setEmail("andre@techcamps.com");
         alunoUm.setEnderecos(Arrays.asList(enderecoUm));
         alunoUm.setTelefones(Arrays.asList(telefoneUm));
+        alunoDois.setNomeCompleto("Mariana Albuquerque");
+        alunoDois.setMatricula("6677889900");
+        alunoDois.setNascimento(new SimpleDateFormat("dd/MM/yyyy").parse("20/12/1992"));
+        alunoDois.setEmail("mariana@techcamps.com");
+        alunoDois.setEnderecos(Arrays.asList(enderecoDois));
+        alunoDois.setTelefones(Arrays.asList(telefoneDois));
 
         Curso cursoUm = new Curso();
         Curso cursoDois = new Curso();
@@ -138,8 +158,7 @@ public class GestaoCursosMain {
         cursoDois.setSigla("JAVA 2");
         cursoDois.setMaterial(materialDois);
         cursoDois.setProfessor(professorDois);
-        cursoDois.setAlunos(Arrays.asList(alunoUm));
-
+        cursoDois.setAlunos(Arrays.asList(alunoDois));
 
         //1) Criando um curso
         cursoModel.create(cursoUm);
@@ -155,6 +174,15 @@ public class GestaoCursosMain {
         //3) Buscando um curso por id
         System.out.println(cursoModel.findById(cursoUm.getId()));
         System.out.println(cursoModel.findById(cursoDois.getId()));
+
+        // achar os alunos
+        System.out.println(cursoModel.findById(cursoDois.getId()).getAlunos());
+
+        // achar os materiais
+        System.out.println(cursoModel.findById(cursoDois.getId()).getMaterial());
+
+        // achar o professor
+        System.out.println(cursoModel.findById(cursoDois.getId()).getProfessor());
 
         System.out.println("----------------------");
 

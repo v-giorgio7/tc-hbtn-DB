@@ -26,7 +26,7 @@ public class MaterialCurso implements Serializable {
     @Column
     private String url;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "material")
+    @OneToOne
     private Curso curso;
 
     @Override

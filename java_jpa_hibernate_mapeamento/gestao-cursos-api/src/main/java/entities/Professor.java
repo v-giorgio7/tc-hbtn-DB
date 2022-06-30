@@ -1,6 +1,8 @@
 package entities;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -34,7 +36,8 @@ public class Professor implements Serializable {
     @Column
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
     private List<Curso> listaCursos = new ArrayList<>();
 
     @Override

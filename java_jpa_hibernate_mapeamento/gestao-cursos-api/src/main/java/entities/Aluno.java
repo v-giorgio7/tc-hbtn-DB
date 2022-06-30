@@ -1,6 +1,8 @@
 package entities;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -39,16 +41,18 @@ public class Aluno implements Serializable {
     @Column
     private String email;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "aluno_id", referencedColumnName = "id")
     private List<Telefone> telefones = new ArrayList<>();
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "aluno_id", referencedColumnName = "id")
     private List<Endereco> enderecos = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "alunos")
-    private List<Curso> cursos;
+//    @ManyToMany
+//    private List<Curso> cursos;
 
     @Override
     public String toString() {
